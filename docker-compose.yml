@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: ci4-mysql-tito
+    restart: always
+    environment:
+      MYSQL_DATABASE: web_12pl2
+      MYSQL_ALLOW_EMPTY_PASSWORD: true
+    ports:
+      - "3306:3306"
+    volumes:
+      - /home/al/SCHOOL/Friends Files/tito/pakYus/web_12pl2/mysql/:/var/lib/mysql
+    networks:
+      - ci4_network
+
+  pypmyadmin:
+    image: phpmyadmin:latest
+    container_name: ci4-phpmyadmin-tito
+    restart: always
+    environment:
+      PMA_HOST: mysql
+      PMA_USER: root
+      PMA_PASSWORD: ""
+    ports:
+      - "8081:80"
+    networks:
+      - ci4_network
+
+volumes:
+  db_data:
+
+networks:
+  ci4_network:
+    driver: bridge
